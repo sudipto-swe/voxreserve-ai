@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
 import { ReservationResponse } from '../types';
+import { API_BASE_URL } from '../config/api';
 
 export const ManualBookingForm: React.FC = () => {
   const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
@@ -25,7 +26,7 @@ export const ManualBookingForm: React.FC = () => {
     setReservationResult(null);
 
     try {
-      const res = await fetch(`http://localhost:8005/api/availability?date=${date}&time=${time}&party_size=${partySize}&seating_area=${seatingArea}`);
+      const res = await fetch(`${API_BASE_URL}/api/availability?date=${date}&time=${time}&party_size=${partySize}&seating_area=${seatingArea}`);
       const data = await res.json();
       setAvailabilityResult(data);
     } catch (err: any) {
@@ -45,7 +46,7 @@ export const ManualBookingForm: React.FC = () => {
     setError(null);
 
     try {
-      const res = await fetch(`http://localhost:8005/api/reservations`, {
+      const res = await fetch(`${API_BASE_URL}/api/reservations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

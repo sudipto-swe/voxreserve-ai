@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MenuCategory, MenuItem } from '../types';
 import { Utensils, AlertTriangle, Flame } from 'lucide-react';
+import { API_BASE_URL } from '../config/api';
 
 export const RestaurantMenu: React.FC = () => {
   const [categories, setCategories] = useState<MenuCategory[]>([]);
@@ -8,7 +9,7 @@ export const RestaurantMenu: React.FC = () => {
   const [selectedAllergen, setSelectedAllergen] = useState<string>('all');
 
   useEffect(() => {
-    fetch('http://localhost:8005/api/menu')
+    fetch(`${API_BASE_URL}/api/menu`)
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);

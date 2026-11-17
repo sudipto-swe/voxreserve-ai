@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Calendar, Wrench, XCircle, Table as TableIcon, RefreshCw, CheckCircle2, Clock } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { API_BASE_URL } from '../config/api';
 
 export const AdminDashboard: React.FC = () => {
   const [analytics, setAnalytics] = useState<any>(null);
@@ -14,9 +15,9 @@ export const AdminDashboard: React.FC = () => {
   const loadData = () => {
     setLoading(true);
     Promise.all([
-      fetch('http://localhost:8005/api/admin/analytics').then(r => r.json()),
-      fetch('http://localhost:8005/api/admin/conversations').then(r => r.json()),
-      fetch('http://localhost:8005/api/admin/tables').then(r => r.json())
+      fetch(`${API_BASE_URL}/api/admin/analytics`).then(r => r.json()),
+      fetch(`${API_BASE_URL}/api/admin/conversations`).then(r => r.json()),
+      fetch(`${API_BASE_URL}/api/admin/tables`).then(r => r.json())
     ]).then(([ana, convs, tbls]) => {
       setAnalytics(ana);
       setConversations(convs);
@@ -34,7 +35,7 @@ export const AdminDashboard: React.FC = () => {
 
   const loadConversationDetails = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:8005/api/admin/conversations/${id}`);
+      const res = await fetch(`${API_BASE_URL}/api/admin/conversations/${id}`);
       const data = await res.json();
       setSelectedConv(data);
     } catch (e) {
@@ -45,7 +46,7 @@ export const AdminDashboard: React.FC = () => {
   const handleCancelReservation = async (code: string, phone: string) => {
     if (!window.confirm(`Are you sure you want to cancel booking ${code}?`)) return;
     try {
-      const res = await fetch('http://localhost:8005/api/reservations/cancel', {
+      const res = await fetch(`${API_BASE_URL}/api/reservations/cancel`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ booking_code: code, customer_phone: phone, reason: "Cancelled by Admin Host" })

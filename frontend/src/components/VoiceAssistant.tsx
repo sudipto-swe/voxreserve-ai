@@ -3,6 +3,7 @@ import { Mic, Volume2, VolumeX, Send, RefreshCw, Sparkles, AlertCircle, Wrench, 
 import { useAppStore } from '../store/useAppStore';
 import { VoiceAdapter } from '../services/voiceAdapter';
 import { AudioWaveform } from './AudioWaveform';
+import { WS_BASE_URL } from '../config/api';
 
 export const VoiceAssistant: React.FC = () => {
   const {
@@ -76,8 +77,7 @@ export const VoiceAssistant: React.FC = () => {
       return;
     }
 
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//${window.location.hostname}:8005/ws/conversation/${conversationId}`;
+    const wsUrl = `${WS_BASE_URL}/ws/conversation/${conversationId}`;
     const ws = new WebSocket(wsUrl);
 
     ws.onopen = () => {
