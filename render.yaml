@@ -1,0 +1,27 @@
+services:
+  # Backend API & WebSocket Service (FastAPI)
+  - type: web
+    name: voxreserve-backend
+    env: python
+    buildCommand: "pip install -r backend/requirements.txt && pip install email-validator && PYTHONPATH=backend python backend/scripts/seed_data.py"
+    startCommand: "cd backend && PYTHONPATH=. uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        value: sqlite:///./voxreserve.db
+      - key: SECRET_KEY
+        generateValue: true
+
+  # Frontend Web Client (React + Vite SPA)
+  - type: web
+    name: voxreserve-frontend
+    env: static
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "./frontend/dist"
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

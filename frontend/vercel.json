@@ -1,0 +1,9 @@
+# Vercel Configuration for Frontend SPA
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

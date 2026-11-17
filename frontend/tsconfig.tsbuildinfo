@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/components/AdminDashboard.tsx","./src/components/AudioWaveform.tsx","./src/components/ManualBookingForm.tsx","./src/components/RestaurantMenu.tsx","./src/components/VoiceAssistant.tsx","./src/services/voiceAdapter.ts","./src/store/useAppStore.ts","./src/types/index.ts"],"version":"5.9.3"}
